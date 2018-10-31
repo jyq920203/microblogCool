@@ -8,7 +8,7 @@ from time import time
 import jwt
 from app.search import add_to_index, remove_from_index, query_index
 
-class SearchMixin(object):
+class SearchableMixin(object):
     @classmethod
     def search(cls, expression, page, per_page):
         ids, total = query_index(cls.__tablename__, expression, page, per_page)
@@ -21,7 +21,7 @@ class SearchMixin(object):
             db.case(when, value=cls.id)),total
 
     @classmethod
-    def before_commit(cls,session):
+    def before_commit(cls, session):
         session._changes = {
             'add': [obj for obj in session.new if isinstance(obj,cls)],
             'update': [obj for obj in session.dirty if isinstance(obj,cls)],
@@ -29,13 +29,16 @@ class SearchMixin(object):
         }
 
     @classmethod
-    def after_commit(cls,session):
+    def after_commit(cls, session):
         for obj in session._changes['add']:
-            add_to_index(cls.__tablename__,obj)
+            if isinstance(obj, SearchableMixin):
+                add_to_index(obj.__tablename__,obj)
         for obj in session._changes['update']:
-            add_to_index(cls.__tablename__,obj)
+            if isinstance(obj, SearchableMixin):
+                add_to_index(obj.__tablename__,obj)
         for obj in session._changes['delete']:
-            remove_from_index(cls.__tablename__,obj)
+            if isinstance(obj, SearchableMixin):
+                remove_from_index(obj.__tablename__,obj)
         session._changes = None
 
     @classmethod
@@ -43,10 +46,8 @@ class SearchMixin(object):
         for obj in cls.query:
             add_to_index(cls.__tablename__,obj)
 
-db.event.listen(db.session,'before_commit', Post.before_commit)
-db.event.listen(db.session,'after_commit',Post.after_commit)
-
-
+db.event.listen(db.session,'before_commit', SearchableMixin.before_commit)
+db.event.listen(db.session,'after_commit',SearchableMixin.after_commit)
 
 followers = db.Table(
     'followers',
@@ -119,7 +120,7 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-class Post(SearchMixin, db.Model):
+class Post(SearchableMixin, db.Model):
     __searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
