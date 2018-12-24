@@ -1,43 +1,9 @@
-2018-12-20 11:25:02,250 ERROR: Exception on /index [POST] [in e:\myproject\gui\venv\lib\site-packages\flask\app.py:1761]
+2018-12-21 10:38:10,319 ERROR: Exception on / [GET] [in e:\myproject\gui\venv\lib\site-packages\flask\app.py:1761]
 Traceback (most recent call last):
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connection.py", line 159, in _new_conn
-    (self._dns_host, self.port), self.timeout, **extra_kw)
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\util\connection.py", line 80, in create_connection
-    raise err
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\util\connection.py", line 70, in create_connection
-    sock.connect(sa)
-ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "e:\myproject\gui\venv\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 172, in perform_request
-    response = self.pool.urlopen(method, url, body, retries=Retry(False), headers=request_headers, **kw)
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
-    _stacktrace=sys.exc_info()[2])
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\util\retry.py", line 343, in increment
-    raise six.reraise(type(error), error, _stacktrace)
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\packages\six.py", line 686, in reraise
-    raise value
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
-    chunked=chunked)
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connectionpool.py", line 354, in _make_request
-    conn.request(method, url, **httplib_request_kw)
-  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\lib\http\client.py", line 1239, in request
-    self._send_request(method, url, body, headers, encode_chunked)
-  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\lib\http\client.py", line 1285, in _send_request
-    self.endheaders(body, encode_chunked=encode_chunked)
-  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\lib\http\client.py", line 1234, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\lib\http\client.py", line 1026, in _send_output
-    self.send(msg)
-  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\lib\http\client.py", line 964, in send
-    self.connect()
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connection.py", line 181, in connect
-    conn = self._new_conn()
-  File "e:\myproject\gui\venv\lib\site-packages\urllib3\connection.py", line 168, in _new_conn
-    self, "Failed to establish a new connection: %s" % e)
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x045EE730>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\ext\declarative\clsregistry.py", line 281, in __call__
+    x = eval(self.arg, globals(), self._dict)
+  File "<string>", line 1, in <module>
+NameError: name 'Notification' is not defined
 
 During handling of the above exception, another exception occurred:
 
@@ -50,35 +16,48 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "e:\myproject\gui\venv\lib\site-packages\flask\_compat.py", line 35, in reraise
     raise value
-  File "e:\myproject\gui\venv\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "e:\myproject\gui\venv\lib\site-packages\flask\app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "e:\myproject\gui\venv\lib\site-packages\flask_login\utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "E:\MyProject\Python\microblog\app\main\routes.py", line 35, in index
-    db.session.commit()
-  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\scoping.py", line 153, in do
-    return getattr(self.registry(), name)(*args, **kwargs)
-  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\session.py", line 943, in commit
-    self.transaction.commit()
-  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\session.py", line 474, in commit
-    self.session.dispatch.after_commit(self.session)
-  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\event\attr.py", line 246, in __call__
-    fn(*args, **kw)
-  File "E:\MyProject\Python\microblog\app\models.py", line 36, in after_commit
-    add_to_index(obj.__tablename__,obj)
-  File "E:\MyProject\Python\microblog\app\search.py", line 11, in add_to_index
-    body=payload)
-  File "e:\myproject\gui\venv\lib\site-packages\elasticsearch\client\utils.py", line 76, in _wrapped
-    return func(*args, params=params, **kwargs)
-  File "e:\myproject\gui\venv\lib\site-packages\elasticsearch\client\__init__.py", line 319, in index
-    _make_path(index, doc_type, id), params=params, body=body)
-  File "e:\myproject\gui\venv\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
-    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
-  File "e:\myproject\gui\venv\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 181, in perform_request
-    raise ConnectionError('N/A', str(e), e)
-elasticsearch.exceptions.ConnectionError: ConnectionError(<urllib3.connection.HTTPConnection object at 0x045EE730>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x045EE730>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。)
-2018-12-20 11:28:38,411 INFO: Microblog startup [in E:\MyProject\Python\microblog\app\__init__.py:78]
-2018-12-20 17:33:48,509 INFO: Microblog startup [in E:\MyProject\Python\microblog\app\__init__.py:78]
-2018-12-20 17:33:58,809 INFO: Microblog startup [in E:\MyProject\Python\microblog\app\__init__.py:78]
+  File "e:\myproject\gui\venv\lib\site-packages\flask\app.py", line 1811, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "e:\myproject\gui\venv\lib\site-packages\flask\app.py", line 2087, in preprocess_request
+    rv = func()
+  File "E:\MyProject\Python\microblog\app\main\routes.py", line 16, in before_request
+    if current_user.is_authenticated:
+  File "e:\myproject\gui\venv\lib\site-packages\werkzeug\local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "e:\myproject\gui\venv\lib\site-packages\werkzeug\local.py", line 306, in _get_current_object
+    return self.__local()
+  File "e:\myproject\gui\venv\lib\site-packages\flask_login\utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "e:\myproject\gui\venv\lib\site-packages\flask_login\utils.py", line 335, in _get_user
+    current_app.login_manager._load_user()
+  File "e:\myproject\gui\venv\lib\site-packages\flask_login\login_manager.py", line 359, in _load_user
+    return self.reload_user()
+  File "e:\myproject\gui\venv\lib\site-packages\flask_login\login_manager.py", line 321, in reload_user
+    user = self.user_callback(user_id)
+  File "E:\MyProject\Python\microblog\app\models.py", line 137, in load_user
+    return User.query.get(int(id))
+  File "e:\myproject\gui\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 512, in __get__
+    mapper = orm.class_mapper(type)
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\mapper.py", line 1276, in _configure_all
+    configure_mappers()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\mapper.py", line 3033, in configure_mappers
+    mapper._post_configure_properties()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\mapper.py", line 1832, in _post_configure_properties
+    prop.init()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\interfaces.py", line 183, in init
+    self.do_init()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\relationships.py", line 1655, in do_init
+    self._process_dependent_arguments()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\relationships.py", line 1712, in _process_dependent_arguments
+    self.target = self.mapper.mapped_table
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 767, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\orm\relationships.py", line 1628, in mapper
+    argument = self.argument()
+  File "e:\myproject\gui\venv\lib\site-packages\sqlalchemy\ext\declarative\clsregistry.py", line 293, in __call__
+    (self.prop.parent, self.arg, n.args[0], self.cls)
+sqlalchemy.exc.InvalidRequestError: When initializing mapper Mapper|User|user, expression 'Notification' failed to locate a name ("name 'Notification' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
