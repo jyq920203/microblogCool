@@ -1,0 +1,7 @@
+Dear {{ user.username }},
+
+Please find attached the achieve of your posts that you requested.
+
+Sincerely,
+
+The Microblog Team
